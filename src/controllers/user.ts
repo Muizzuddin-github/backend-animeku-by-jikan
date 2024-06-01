@@ -82,8 +82,6 @@ const userControl = {
         },
       ]);
 
-      console.log(histories);
-
       res.status(200).json(histories);
     } catch (err) {
       next(err);
