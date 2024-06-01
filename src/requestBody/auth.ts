@@ -7,3 +7,8 @@ export interface Register {
 export interface RegisterSave {
   otp: string;
 }
+
+export interface RequestBodyLogin {
+  email: string;
+  password: string;
+}
