@@ -5,8 +5,9 @@ import { RequestBodyHistory } from "../requestBody/history";
 import HistoryValidation from "../validation/history";
 import isObjectID from "../utility/isObjectID";
 import ResponseErr from "../utility/responseErr";
-import { ResponseBodyMsg } from "../responseBody/response";
+import { ResponseBodyData, ResponseBodyMsg } from "../responseBody/response";
 import mongoose from "mongoose";
+import { ResponseHistory } from "../responseBody/history";
 
 const userControl = {
   async addHistory(req: Request, res: Response, next: NextFunction) {
@@ -62,7 +63,7 @@ const userControl = {
     try {
       const customReq = req as CustomRequest;
 
-      const histories = await UsersCol.aggregate([
+      const histories: ResponseHistory[] = await UsersCol.aggregate([
         {
           $match: {
             _id: new mongoose.Types.ObjectId(customReq._id),
@@ -74,7 +75,6 @@ const userControl = {
         {
           $project: {
             _id: 0,
-            username: 0,
             email: 0,
             password: 0,
             created_at: 0,
@@ -82,7 +82,12 @@ const userControl = {
         },
       ]);
 
-      res.status(200).json(histories);
+      const r: ResponseBodyData<ResponseHistory[]> = {
+        message: "Semua data history",
+        data: histories,
+      };
+
+      res.status(200).json(r);
     } catch (err) {
       next(err);
     }
