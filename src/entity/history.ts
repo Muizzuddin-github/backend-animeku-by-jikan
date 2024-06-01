@@ -5,6 +5,7 @@ export interface HistoryEntity {
   images: string;
   trailer: string;
   title: string;
+  status: string;
   score: number;
   year: number;
 }

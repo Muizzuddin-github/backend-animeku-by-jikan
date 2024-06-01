@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { Register, RegisterSave } from "../requestBody/auth";
+import { Register, RegisterSave, RequestBodyLogin } from "../requestBody/auth";
 
 class Schema {
   protected static get registerSchema() {
@@ -29,16 +29,28 @@ class Schema {
         .required(),
     });
   }
+
+  protected static get loginSchema() {
+    return Joi.object({
+      email: Joi.string().trim().email().required(),
+      password: Joi.string().trim().min(6).max(6).required(),
+    });
+  }
 }
 
 class AuthValidation extends Schema {
   static register(body: Register) {
-    return this.registerSchema.validateAsync(body, {
+    return super.registerSchema.validateAsync(body, {
       abortEarly: false,
     });
   }
   static registerSave(body: RegisterSave) {
-    return this.registerSaveSchema.validateAsync(body, {
+    return super.registerSaveSchema.validateAsync(body, {
+      abortEarly: false,
+    });
+  }
+  static login(body: RequestBodyLogin) {
+    return super.loginSchema.validateAsync(body, {
       abortEarly: false,
     });
   }

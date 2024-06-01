@@ -9,6 +9,7 @@ const schemaHistory = new mongoose.Schema({
   images: String,
   trailer: String,
   title: String,
+  status: String,
   score: Number,
   year: Number,
   created_at: {
@@ -17,5 +18,4 @@ const schemaHistory = new mongoose.Schema({
   },
 });
 
-const HistoryCol = mongoose.model("history", schemaHistory, "history");
-export default HistoryCol;
+export default schemaHistory;

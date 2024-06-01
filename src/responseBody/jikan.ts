@@ -16,6 +16,12 @@ export interface SearchJikan {
   images: Images;
   trailer: Trailer;
   title: string;
+  status: string;
   score: number;
   year: number;
+}
+
+export interface ResponseJikan {
+  message: string;
+  data: any[];
 }

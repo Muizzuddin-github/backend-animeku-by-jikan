@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { HistoryReqBody } from "../requestBody/history";
+import { RequestBodyHistory } from "../requestBody/history";
 
 class HistorySchema {
   protected static get addSchema() {
@@ -9,6 +9,7 @@ class HistorySchema {
       images: Joi.string().trim().required(),
       trailer: Joi.string().trim().required(),
       title: Joi.string().trim().required(),
+      status: Joi.string().trim().required(),
       score: Joi.number().required(),
       year: Joi.number().required(),
     });
@@ -16,7 +17,7 @@ class HistorySchema {
 }
 
 class HistoryValidation extends HistorySchema {
-  static add(body: HistoryReqBody) {
+  static add(body: RequestBodyHistory) {
     return super.addSchema.validateAsync(body, {
       abortEarly: false,
     });

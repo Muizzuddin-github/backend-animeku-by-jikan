@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import schemaHistory from "./history";
 
 const schemaUsers = new mongoose.Schema({
   username: {
@@ -14,6 +15,7 @@ const schemaUsers = new mongoose.Schema({
     type: String,
     required: true,
   },
+  history: [schemaHistory],
   created_at: {
     type: Date,
     default: new Date(),

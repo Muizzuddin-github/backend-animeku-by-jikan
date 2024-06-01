@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Register, RegisterSave } from "../requestBody/auth";
+import { Register, RegisterSave, RequestBodyLogin } from "../requestBody/auth";
 import { Email, EmailConfig } from "../utility/sendEmail";
 import AuthValidation from "../validation/Auth";
 import { ResponseRegisterEmail } from "../responseBody/register";
@@ -13,6 +13,7 @@ import { ResponseBodyMsg } from "../responseBody/response";
 import UsersCol from "../models/users";
 import { OtpCodeEntity } from "../entity/otpCode";
 import verifyToken, { VerifyTokenOtp } from "../utility/verifyToken";
+import { UserColEntity } from "../entity/users";
 
 const authControl = {
   async register(req: Request, res: Response, next: NextFunction) {
@@ -112,6 +113,74 @@ const authControl = {
         message: "Registrasi berhasil",
       };
       res.status(201).json(r);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body: RequestBodyLogin = req.body;
+      await AuthValidation.login(body);
+
+      const checkUser: UserColEntity | null = await UsersCol.findOne({
+        email: body.email,
+      });
+
+      if (!checkUser) {
+        throw new ResponseErr(404, "Periksa email atau assword anda");
+      }
+
+      const checkPassword: boolean = await bcrypt.compare(
+        body.password,
+        checkUser.password
+      );
+
+      if (!checkPassword) {
+        throw new ResponseErr(404, "Periksa email atau assword anda");
+      }
+
+      if (!process.env.SECRET_TOKEN) {
+        throw new ResponseErr(500, "Secret token invalid");
+      }
+
+      const token = jwt.sign(
+        {
+          _id: checkUser._id.toString(),
+        },
+        process.env.SECRET_TOKEN,
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 86400 * 1000,
+        priority: "high",
+        secure: true,
+        signed: true,
+      });
+
+      res.status(200).json("login");
+    } catch (err) {
+      next(err);
+    }
+  },
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.cookie("token", "", {
+        httpOnly: true,
+        maxAge: 0,
+        priority: "high",
+        secure: true,
+        signed: true,
+      });
+
+      const r: ResponseBodyMsg = {
+        message: "Berhasil logout",
+      };
+      res.status(200).json(r);
     } catch (err) {
       next(err);
     }
