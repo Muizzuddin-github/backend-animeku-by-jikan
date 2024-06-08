@@ -11,6 +11,7 @@ class HistorySchema {
       title: Joi.string().trim().required(),
       status: Joi.string().trim().required(),
       score: Joi.number().required(),
+      genres: Joi.array().items(Joi.string()),
       year: Joi.number().required(),
     });
   }
