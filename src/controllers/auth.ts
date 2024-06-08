@@ -101,6 +101,11 @@ const authControl = {
         process.env.SECRET_OTP
       );
 
+      const checkUser = await UsersCol.findOne({ email: decoded.email });
+      if (checkUser) {
+        throw new ResponseErr(400, "Code otp anda tidak valid");
+      }
+
       const userSave = new UsersCol({
         username: decoded.username,
         email: decoded.email,
