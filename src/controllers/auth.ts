@@ -109,6 +109,10 @@ const authControl = {
 
       await userSave.save();
 
+      await OtpCodeCol.deleteOne({
+        otp: body.otp,
+      });
+
       const r: ResponseBodyMsg = {
         message: "Registrasi berhasil",
       };

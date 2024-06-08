@@ -4,6 +4,7 @@ const schemaUsers = new mongoose.Schema({
   otp: {
     type: String,
     required: true,
+    unique: true,
   },
   otpToken: {
     type: String,
