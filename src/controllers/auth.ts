@@ -171,7 +171,11 @@ const authControl = {
         signed: true,
       });
 
-      res.status(200).json("login");
+      const r: ResponseBodyMsg = {
+        message: "Berhasil login",
+      };
+
+      res.status(200).json(r);
     } catch (err) {
       next(err);
     }

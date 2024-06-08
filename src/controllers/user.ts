@@ -25,7 +25,10 @@ const userControl = {
         }
       );
 
-      res.status(200).send("oke");
+      const r: ResponseBodyMsg = {
+        message: "Anime berhasil ditambahkan",
+      };
+      res.status(200).send(r);
     } catch (err) {
       next(err);
     }
