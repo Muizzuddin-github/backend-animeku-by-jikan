@@ -7,7 +7,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 const app: express.Application = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: ["https://animeku-two.vercel.app"],
+    credentials: true,
+  })
+);
 app.use(cookieParser("secret"));
 app.use(express.json());
 
