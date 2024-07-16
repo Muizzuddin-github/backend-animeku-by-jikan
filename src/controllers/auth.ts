@@ -93,10 +93,6 @@ const authControl = {
         throw new ResponseErr(404, "Code otp anda tidak valid");
       }
 
-      if (otpDb.otp !== body.otp) {
-        throw new ResponseErr(400, "Periksa code otp anda");
-      }
-
       if (!process.env.SECRET_OTP) {
         throw new ResponseErr(500, "Secret otp invalid");
       }
