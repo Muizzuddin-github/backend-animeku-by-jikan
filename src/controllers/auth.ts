@@ -169,6 +169,7 @@ const authControl = {
         priority: "high",
         secure: true,
         signed: true,
+        sameSite: "none",
       });
 
       const r: ResponseBodyMsg = {
