@@ -83,9 +83,6 @@ const authControl = {
                 if (!otpDb) {
                     throw new responseErr_1.default(404, "Code otp anda tidak valid");
                 }
-                if (otpDb.otp !== body.otp) {
-                    throw new responseErr_1.default(400, "Periksa code otp anda");
-                }
                 if (!process.env.SECRET_OTP) {
                     throw new responseErr_1.default(500, "Secret otp invalid");
                 }
@@ -142,6 +139,7 @@ const authControl = {
                     priority: "high",
                     secure: true,
                     signed: true,
+                    sameSite: "none",
                 });
                 const r = {
                     message: "Berhasil login",
