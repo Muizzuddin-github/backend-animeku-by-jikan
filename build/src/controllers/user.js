@@ -86,6 +86,7 @@ const userControl = {
                     {
                         $unwind: "$history",
                     },
+                    { $sort: { "history.created_at": -1 } },
                     {
                         $project: {
                             _id: 0,
