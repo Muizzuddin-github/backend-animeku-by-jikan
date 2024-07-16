@@ -12,6 +12,7 @@ const schemaHistory = new mongoose.Schema({
   status: String,
   score: Number,
   year: Number,
+  genres: [],
   created_at: {
     type: Date,
     default: Date.now,

@@ -33,7 +33,7 @@ class Schema {
   protected static get loginSchema() {
     return Joi.object({
       email: Joi.string().trim().email().required(),
-      password: Joi.string().trim().min(6).max(6).required(),
+      password: Joi.string().trim().min(6).required(),
     });
   }
 }

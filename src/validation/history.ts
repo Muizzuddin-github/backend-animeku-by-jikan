@@ -7,11 +7,12 @@ class HistorySchema {
       mal_id: Joi.number().required(),
       url: Joi.string().trim().required(),
       images: Joi.string().trim().required(),
-      trailer: Joi.string().trim().required(),
+      trailer: Joi.required(),
       title: Joi.string().trim().required(),
-      status: Joi.string().trim().required(),
-      score: Joi.number().required(),
-      year: Joi.number().required(),
+      status: Joi.required(),
+      score: Joi.required(),
+      genres: Joi.array().items(Joi.string()),
+      year: Joi.required(),
     });
   }
 }

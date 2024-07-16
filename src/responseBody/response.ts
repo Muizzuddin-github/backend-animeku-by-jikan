@@ -16,3 +16,8 @@ export interface ResponseBodyData<T> {
   message: string;
   data: T;
 }
+
+export interface RequestBodyIsLogin {
+  message: string;
+  username: string;
+}

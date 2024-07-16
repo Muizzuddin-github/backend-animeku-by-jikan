@@ -7,5 +7,6 @@ auth.post("/api/user/register", authControl.register);
 auth.post("/api/user/register-save", authControl.registerSave);
 auth.post("/api/user/login", authControl.login);
 auth.post("/api/user/logout", authControl.logout);
+auth.get("/api/user/islogin", authControl.isLogin);
 
 export default auth;
