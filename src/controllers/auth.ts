@@ -9,12 +9,16 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import ResponseErr from "../utility/responseErr";
 import OtpCodeCol from "../models/otpCode";
-import { ResponseBodyMsg } from "../responseBody/response";
+import { RequestBodyIsLogin, ResponseBodyMsg } from "../responseBody/response";
 import UsersCol from "../models/users";
 import { OtpCodeEntity } from "../entity/otpCode";
-import verifyToken, { VerifyTokenOtp } from "../utility/verifyToken";
+import verifyToken, {
+  VerifyTokenOtp,
+  VerifyToken,
+} from "../utility/verifyToken";
 import { UserColEntity } from "../entity/users";
-
+import isObjectID from "../utility/isObjectID";
+import { CustomRequest } from "../types/expressCustom";
 const authControl = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
@@ -193,6 +197,46 @@ const authControl = {
       const r: ResponseBodyMsg = {
         message: "Berhasil logout",
       };
+      res.status(200).json(r);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async isLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.signedCookies.token;
+
+      if (!token) {
+        throw new ResponseErr(403, "Silahkan login terlebih dahulu");
+      }
+
+      if (!process.env.SECRET_TOKEN) {
+        throw new ResponseErr(500, "Secret invalid");
+      }
+
+      const decode: VerifyToken = await verifyToken<VerifyToken>(
+        token,
+        process.env.SECRET_TOKEN
+      );
+
+      if (!isObjectID(decode._id)) {
+        throw new ResponseErr(403, "Silahkan login terlebih dahulu");
+      }
+
+      const checkUser: UserColEntity | null = await UsersCol.findById(
+        decode._id
+      );
+
+      if (!checkUser) {
+        throw new ResponseErr(403, "Silahkan login terlebih dahulu");
+      }
+
+      const r: RequestBodyIsLogin = {
+        message: "User is logined",
+        username: checkUser.username,
+      };
+
       res.status(200).json(r);
     } catch (err) {
       next(err);

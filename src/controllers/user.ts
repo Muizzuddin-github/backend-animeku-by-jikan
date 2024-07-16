@@ -16,14 +16,25 @@ const userControl = {
       const body: RequestBodyHistory = req.body;
       await HistoryValidation.add(body);
 
-      await UsersCol.updateOne(
-        { _id: customReq._id },
+      const checkAnime = await UsersCol.aggregate([
         {
-          $push: {
-            history: body,
+          $match: {
+            _id: new mongoose.Types.ObjectId(customReq._id),
+            history: { $elemMatch: { mal_id: body.mal_id } },
           },
-        }
-      );
+        },
+      ]);
+
+      if (checkAnime.length === 0) {
+        await UsersCol.updateOne(
+          { _id: customReq._id },
+          {
+            $push: {
+              history: body,
+            },
+          }
+        );
+      }
 
       const r: ResponseBodyMsg = {
         message: "Anime berhasil ditambahkan",
