@@ -18,7 +18,7 @@ import verifyToken, {
 } from "../utility/verifyToken";
 import { UserColEntity } from "../entity/users";
 import isObjectID from "../utility/isObjectID";
-import { CustomRequest } from "../types/expressCustom";
+
 const authControl = {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
