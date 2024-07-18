@@ -7,7 +7,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const schemaHistory = new mongoose_1.default.Schema({
     mal_id: {
         type: Number,
-        unique: true,
+        required: true,
     },
     url: String,
     images: String,
