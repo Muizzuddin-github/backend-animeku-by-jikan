@@ -12,7 +12,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: ["https://animeku-two.vercel.app", "http://localhost:5173"],
+    origin: "https://animeku-two.vercel.app",
     credentials: true,
 }));
 app.use((0, cookie_parser_1.default)("secret"));

@@ -6,7 +6,7 @@ const animeControl = {
   async search(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await axios.get(
-        `https://api.jikan.moe/v4/anime?q=${req.params.src}&limit=10`
+        `https://api.jikan.moe/v4/anime?q=${req.params.src}&limit=16`
       );
 
       const jikanRes: SearchJikan[] = data.data.data;
