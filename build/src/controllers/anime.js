@@ -17,7 +17,7 @@ const animeControl = {
     search(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield axios_1.default.get(`https://api.jikan.moe/v4/anime?q=${req.params.src}&limit=10`);
+                const data = yield axios_1.default.get(`https://api.jikan.moe/v4/anime?q=${req.params.src}&limit=16`);
                 const jikanRes = data.data.data;
                 const r = {
                     message: "Data yang dicari",
