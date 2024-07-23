@@ -33,11 +33,12 @@ const userControl = {
                     },
                 ]);
                 if (checkAnime.length === 0) {
-                    yield users_1.default.updateOne({ _id: customReq._id }, {
+                    const p = yield users_1.default.updateOne({ _id: customReq._id }, {
                         $push: {
                             history: body,
                         },
                     });
+                    console.log(p);
                 }
                 const r = {
                     message: "Anime berhasil ditambahkan",
