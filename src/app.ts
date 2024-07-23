@@ -9,7 +9,7 @@ import cors from "cors";
 const app: express.Application = express();
 app.use(
   cors({
-    origin: "https://animeku-two.vercel.app",
+    origin: ["https://animeku-two.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
 );
