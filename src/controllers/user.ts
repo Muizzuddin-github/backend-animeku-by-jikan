@@ -26,7 +26,7 @@ const userControl = {
       ]);
 
       if (checkAnime.length === 0) {
-        const p = await UsersCol.updateOne(
+        await UsersCol.updateOne(
           { _id: customReq._id },
           {
             $push: {
@@ -34,7 +34,6 @@ const userControl = {
             },
           }
         );
-        console.log(p);
       }
 
       const r: ResponseBodyMsg = {
